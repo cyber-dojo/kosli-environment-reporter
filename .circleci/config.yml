@@ -1,0 +1,55 @@
+version: 2
+jobs:
+
+  merkely-report-beta-env:
+    docker:
+      - image: ghcr.io/merkely-development/reporter:v0.2.0
+    steps:
+      - checkout
+      - run:
+          name: Connect to k8s cluster
+          command: ./.circleci/connect-to-k8s.sh
+      - run:
+          name: Report k8s cluster namespace beta and send to staging.app.merkely.com and app.merkely.com
+          command: |
+            reporter report env k8s beta -H https://staging.app.merkely.com --owner cyber-dojo --namespace beta
+            reporter report env k8s beta --owner cyber-dojo --namespace beta
+
+
+  merkely-report-prod-env:
+    docker:
+      - image: ghcr.io/merkely-development/reporter:v0.2.0
+    steps:
+      - checkout
+      - run:
+          name: Connect to k8s cluster
+          command: ./.circleci/connect-to-k8s.sh
+      - run:
+          name: Report k8s cluster namespace prod and send to staging.app.merkely.com and app.merkely.com
+          command: |
+            reporter report env k8s prod -H https://staging.app.merkely.com --owner cyber-dojo --namespace prod
+            reporter report env k8s prod --owner cyber-dojo --namespace prod
+
+
+workflows:
+  version: 2
+  every-hour:
+    triggers:
+      - schedule:
+          #cron: "0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57 * * * *"
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only: [ master ]
+    jobs:
+      - merkely-report-beta-env:
+          context: cyberdojo-context
+          filters:
+            branches:
+              only: [ master ]
+
+      - merkely-report-prod-env:
+          context: cyberdojo-context
+          filters:
+            branches:
+              only: [ master ]
