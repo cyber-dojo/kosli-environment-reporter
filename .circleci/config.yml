@@ -40,16 +40,16 @@ workflows:
           cron: "0 * * * *"
           filters:
             branches:
-              only: [ master ]
+              only: [ main ]
     jobs:
       - merkely-report-beta-env:
           context: cyberdojo-context
           filters:
             branches:
-              only: [ master ]
+              only: [ main ]
 
       - merkely-report-prod-env:
           context: cyberdojo-context
           filters:
             branches:
-              only: [ master ]
+              only: [ main ]
