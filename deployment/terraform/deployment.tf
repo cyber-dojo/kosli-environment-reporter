@@ -9,7 +9,7 @@ module "lambda_reporter" {
   name              = "${var.app_name}-${each.key}"
   env               = var.env
   kosli_host        = each.value.kosli_host
-  kosli_cli_version = "1.5.9"
+  kosli_cli_version = "v0.1.8"
   ecs_cluster       = "app"
   kosli_user        = "cyber-dojo"
   tags              = module.tags.result
