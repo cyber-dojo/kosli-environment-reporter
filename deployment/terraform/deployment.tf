@@ -1,16 +1,14 @@
-resource "aws_ecr_pull_through_cache_rule" "this" {
-  ecr_repository_prefix = "ecr-public"
-  upstream_registry_url = "public.ecr.aws"
-}
-
 module "lambda_reporter" {
-  for_each          = var.reporter_apps
-  source            = "./lambda-reporter"
+  for_each = var.reporter_apps
+
+  source  = "kosli-dev/kosli-reporter/aws"
+  version = "0.0.3"
+
   name              = "${var.app_name}-${each.key}"
-  env               = var.env
+  kosli_env         = var.env
   kosli_host        = each.value.kosli_host
   kosli_cli_version = "v0.1.8"
   ecs_cluster       = "app"
-  kosli_user        = "cyber-dojo"
+  kosli_org         = "cyber-dojo"
   tags              = module.tags.result
 }
