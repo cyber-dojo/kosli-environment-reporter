@@ -2,7 +2,7 @@ module "lambda_reporter" {
   for_each = var.reporter_apps
 
   source  = "kosli-dev/kosli-reporter/aws"
-  version = "0.0.5"
+  version = "0.0.6"
 
   name              = "${var.app_name}-${each.key}"
   kosli_env         = var.env

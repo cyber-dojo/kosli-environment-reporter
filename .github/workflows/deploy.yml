@@ -68,13 +68,3 @@ jobs:
           TF_AUTO_APPLY_SAVED_PLAN: true
           TF_SKIP_BACKEND_INIT: true
         run: ./tf.sh apply plan.tfplan
-
-      #- name: Slack Notification for Deployment
-      #  uses: rtCamp/action-slack-notify@v2
-      #  env:
-      #    SLACK_CHANNEL: ${{ secrets.MERKELY_SLACK_CI_DEPLOYMENTS_CHANNEL }}
-      #    SLACK_COLOR: ${{ job.status }}
-      #    SLACK_TITLE: Utilities Deployment ${{ job.status }}
-      #    SLACK_MESSAGE: ${{ job.status }}
-      #    SLACK_USERNAME: GithubActions
-      #    SLACK_WEBHOOK: ${{ secrets.MERKELY_SLACK_CI_DEPLOYMENTS_WEBHOOK }}
