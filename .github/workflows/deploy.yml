@@ -57,7 +57,7 @@ jobs:
 
       # Run terraform plan, save plan to file
       - name: Terraform plan
-        env: 
+        env:
           TF_VAR_KOSLI_CLI_VERSION: ${{ inputs.tag }}
         working-directory: deployment/terraform/
         run: ./tf.sh plan -no-color -out plan.tfplan
