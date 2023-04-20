@@ -5,17 +5,25 @@ on:
     branches:
       - main
 
-jobs:
-  deploy-beta:
-    uses: cyber-dojo/kosli-environment-reporter/.github/workflows/deploy.yml@main
-    with:
-      tag: v0.1.9
-      AWS_ACCOUNT_ID: 244531986313
-      AWS_REGION: eu-central-1
 
-  deploy-prod:
-    uses: cyber-dojo/kosli-environment-reporter/.github/workflows/deploy.yml@main
+concurrency:
+  group: ${{ github.workflow }} 
+
+jobs:
+  apply:
+    uses: fivexl/gh-workflow-tf-plan-apply/.github/workflows/base.yml@v0.0.3
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [beta, prod]
+        include:
+          - aws_role_arn: arn:aws:iam::244531986313:role/gh_actions_reporter
+            environment: beta
+          - aws_role_arn: arn:aws:iam::274425519734:role/gh_actions_reporter
+            environment: prod
     with:
-      tag: v0.1.9
-      AWS_ACCOUNT_ID: 274425519734
-      AWS_REGION: eu-central-1
+      aws_region: eu-central-1
+      aws_role_arn: ${{ matrix.aws_role_arn }}
+      aws_default_region: eu-central-1
+      working_directory: deployment/terraform/
+      tf_apply: 'true'
