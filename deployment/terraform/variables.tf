@@ -1,4 +1,4 @@
-variable "reporter_apps" {
+variable "kosli_hosts" {
   type = map(any)
   default = {
     staging = {

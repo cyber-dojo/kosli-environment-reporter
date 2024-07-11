@@ -14,7 +14,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    uses: fivexl/gh-workflow-tf-plan-apply/.github/workflows/base.yml@v0.0.3
+    uses: fivexl/gh-workflow-tf-plan-apply/.github/workflows/base.yml@v0.0.20
     strategy:
       fail-fast: false
       matrix:
@@ -30,3 +30,4 @@ jobs:
       aws_default_region: eu-central-1
       working_directory: deployment/terraform/
       tf_apply: 'true'
+      tf_version: v1.9.1
