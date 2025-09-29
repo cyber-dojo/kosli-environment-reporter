@@ -4,7 +4,7 @@ module "lambda_reporter" {
 
   name                       = "${var.app_name}-reporter"
   kosli_environment_type     = "ecs"
-  kosli_cli_version          = "v2.11.20"
+  kosli_cli_version          = "v2.11.23"
   kosli_environment_name     = var.env
   kosli_org                  = "cyber-dojo"
   kosli_host                 = var.KOSLI_HOST
